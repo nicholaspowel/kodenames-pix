@@ -35,11 +35,12 @@
     ga('create', 'UA-48676831-8', 'auto');
     ga('send', 'pageview');
 
-    var imgWidth = Math.floor($(window).width() / 5.5);
-    var imgHeight = Math.floor($(window).height() / 5.5);
+    var imgWidth = $(window).width() / 5.5;
+    var imgHeight = $(window).height() / 5.5;
     for(var i = 0;i < 5; i++){
       $('#theTable').append('<tr id="row' + i + '""></tr>');
       for (var j = 0;j < 5; j++){
+        var width = imgWidth + j + i;
         $('#row' + i).append('<td><img src="https://unsplash.it/' + imgWidth + j + i + '/' + imgHeight + '?random"></td>');
       }
     }
