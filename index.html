@@ -10,6 +10,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <style>
     img {
+      display: block;
       border: solid;
       border-width: 5px;
       border-color: white;
@@ -22,32 +23,49 @@
       border: solid;
       border-color: red;
     }
-    .blue{
-
-      border: solid;
-      border-color: blue;
-      border-width: 5px;
+    .tint {
+      position: relative;
+      float: left;
+      cursor: pointer;
+      -webkit-shadow: rgba(0,0,0,.2) 3px 5px 5px;
+      -moz-shadow: rgba(0,0,0,.2) 3px 5px 5px;
+      box-shadow: rgba(0,0,0,.2) 3px 5px 5px;
     }
-
-    .red {      
-      border: solid;
-      border-color: red;
-      border-width: 5px;
+    
+    .tint:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      -moz-transition: all .3s linear;
+      -webkit-transition: all .3s linear;
+      -ms-transition: all .3s linear;
+      -o-transition: all .3s linear;
+      transition: all .3s linear;
     }
-    .black {
-      border: solid;
-      border-color: black;
-      border-width: 5px;
+    .tint:before {
+      background: rgba(0,255,255, 0.5);
     }
-    .yellow {
-      border: solid;
-      border-color: yellow;
-      border-width: 5px;
+    .red:before{
+      background: rgba(255,0,0, 0.5);
     }
-    .green {
-      border: solid;
-      border-color: green;
-      border-width: 5px;
+    .blue:before {
+      background: rgba(0,0,255, 0.5);
+    }
+    .yellow:before {
+       background: rgba(255,255,0, 0.5);
+     }
+     .green:before {
+       background: rgba(0,255,0, 0.5);
+     }
+     .t5:before {
+       background: rgba(0,0,0, 0.5);;
+     }
+    figure {
+      margin: 0 0 0 0;
     }
   </style>
 </head>
@@ -125,23 +143,36 @@
         $(this).addClass(teams.pop());
       });
 
-      $('img').bind('click', function(){
-        if($(this).hasClass('redSecret')){
-          $(this).addClass('red');
-        } else if($(this).hasClass('blueSecret')){
-          $(this).addClass('blue');
-        } else if($(this).hasClass('yellowSecret')){
-          $(this).addClass('yellow');
-        } else if($(this).hasClass('blackSecret')){
-          $(this).addClass('black');
-        }  
-      }); 
+
       if(spymaster){
-        $('img').click();
-        $('img').unbind().bind('click', function(){
-          $(this).addClass('green');
+        $('img').each(function(){
+          if($(this).hasClass('redSecret')){
+            $(this).css('border-color', 'red');
+          } else if($(this).hasClass('blueSecret')){
+            $(this).css('border-color', 'blue');
+          } else if($(this).hasClass('yellowSecret')){
+            $(this).css('border-color', 'yellow');
+          } else if($(this).hasClass('blackSecret')){
+            $(this).css('border-color', 'black');
+          }  
         });
-      } 
+
+        $('img').bind('click', function(){
+          $(this).wrap('<figure class="tint green"></figure>');
+        });
+      } else {
+        $('img').bind('click', function(){
+          if($(this).hasClass('redSecret')){
+            $(this).wrap('<figure class="tint red"></figure>');
+          } else if($(this).hasClass('blueSecret')){
+            $(this).wrap('<figure class="tint blue"></figure>');
+          } else if($(this).hasClass('yellowSecret')){
+            $(this).wrap('<figure class="tint yellow"></figure>');
+          } else if($(this).hasClass('blackSecret')){
+            $(this).wrap('<figure class="tint t5"></figure>');
+          }  
+        }); 
+      }
     });
 
     function shuffle(array) {
