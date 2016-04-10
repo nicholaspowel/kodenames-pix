@@ -9,16 +9,35 @@
   <meta name="author" content="SitePoint">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <style>
+    body{
+      margin: 0px;
+    }
     .blue{
-      background: blue;
+
+      border: solid;
+      border-color: blue;
+      border-width: 5px;
     }
 
-    .red {
-      background: red;
+    .red {      
+      border: solid;
+      border-color: red;
+      border-width: 5px;
     }
-
+    .black {
+      border: solid;
+      border-color: black;
+      border-width: 5px;
+    }
     .yellow {
-      background: yellow;
+      border: solid;
+      border-color: yellow;
+      border-width: 5px;
+    }
+    .green {
+      border: solid;
+      border-color: green;
+      border-width: 5px;
     }
   </style>
 </head>
@@ -38,16 +57,16 @@
   </script>
   <script src="seedrandom.js"></script>
   <script>
+    var spymaster = false;
     if(window.location.hash) {
       var hash = window.location.hash.substring(1).toLowerCase();
       if(hash.charAt(0) === 's'){
-        hash.substring(1);
+        hash = hash.substring(1);
+        spymaster = true;
       } else {
         //do something
       }
       Math.seedrandom(hash);
-    } else {
-      Math.seedrandom('');
     }
     var url = "https://unsplash.it/list";
     var arr = [];
@@ -71,20 +90,60 @@
           $('#row' + i).append('<td><img src="https://unsplash.it/' + imgWidth + '/' + imgHeight + '?image=' + arr[((i*5) + j)] + '"></td>');
         }
       }
+      var teams = [];
+      //9 8 1 7     
+      for(var i = 0;i<7;i++){
+        teams.push('redSecret');
+        teams.push('blueSecret');
+        teams.push('yellowSecret');
+      }
+      teams.push('redSecret');
+      teams.push('redSecret');
+      teams.push('blueSecret');
+      teams.push('blackSecret');
 
-      $('td').bind('click', function(){
-        if($(this).hasClass('red')){
-          $(this).removeClass('red').addClass('blue');
-        } else if($(this).hasClass('blue')){
-          $(this).removeClass('blue').addClass('yellow');
-        } else if($(this).hasClass('yellow')){
-          $(this).removeClass('yellow');
-        } else {
-          $(this).addClass('red');
-        }
+      shuffle(teams);
+      $( "img" ).each(function() {
+        $(this).addClass(teams.pop());
       });
+
+      $('img').bind('click', function(){
+        if($(this).hasClass('redSecret')){
+          $(this).addClass('red');
+        } else if($(this).hasClass('blueSecret')){
+          $(this).addClass('blue');
+        } else if($(this).hasClass('yellowSecret')){
+          $(this).addClass('yellow');
+        } else if($(this).hasClass('blackSecret')){
+          $(this).addClass('black');
+        }  
+      }); 
+      if(spymaster){
+        $('img').click();
+        $('img').unbind().bind('click', function(){
+          $(this).addClass('green');
+        });
+      } 
     });
 
+    function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    }
 
   </script>
 
