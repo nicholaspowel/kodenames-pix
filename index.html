@@ -36,7 +36,19 @@
     ga('send', 'pageview');
 
   </script>
+  <script src="/scripts/seedrandom.js"></script>
   <script>
+    if(window.location.hash) {
+      var hash = window.location.hash.substring(1).toLowerCase();
+      if(hash.charAt(0) === 's'){
+        hash.substring(1);
+      } else {
+        //do something
+      }
+      Math.seedrandom(hash);
+    } else {
+      Math.seedrandom('');
+    }
     var url = "https://unsplash.it/list";
     var arr = [];
     var json;
@@ -72,6 +84,8 @@
         }
       });
     });
+
+
   </script>
 
 </body>
