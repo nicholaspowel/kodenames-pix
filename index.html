@@ -12,6 +12,10 @@
     body{
       margin: 0px;
     }
+    #theTable{
+      border: solid;
+      border-color: red;
+    }
     .blue{
 
       border: solid;
@@ -98,9 +102,17 @@
         teams.push('yellowSecret');
       }
       teams.push('redSecret');
-      teams.push('redSecret');
       teams.push('blueSecret');
       teams.push('blackSecret');
+      //random starter team
+      if(Math.floor((Math.random() * 2) + 1) % 2 === 0){
+          teams.push('redSecret');
+          //make border red
+      } else {
+        teams.push('blueSecret');
+        $('#theTable').css('border-color', 'blue');
+      }
+
 
       shuffle(teams);
       $( "img" ).each(function() {
