@@ -9,7 +9,7 @@
   <meta name="author" content="SitePoint">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <style>
-    img {
+    .spymaster {
       display: block;
       border: solid;
       border-width: 5px;
@@ -145,6 +145,7 @@
 
 
       if(spymaster){
+        $('img').addClass('spymaster');
         $('img').each(function(){
           if($(this).hasClass('redSecret')){
             $(this).css('border-color', 'red');
