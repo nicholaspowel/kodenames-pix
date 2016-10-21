@@ -102,26 +102,30 @@
       }
       Math.seedrandom(hash);
     }
-    var url = "https://unsplash.it/list";
-    var arr = [];
-    var json;
-    $.getJSON(url, function (data) {
-       json = data; 
-    }).then(function(){
+      (function(){
+        var arr = [];
       while(arr.length < 25){
-             var randomnumber=json[Math.floor((Math.random() * json.length))].id;
+             var randomnumber= Math.floor((Math.random() * 278));
              var found=false;
              for(var i=0;i<arr.length;i++){
-            if(arr[i]==randomnumber){found=true;break}
+            if(arr[i]===randomnumber){found=true;break;}
              }
-             if(!found)arr[arr.length]=randomnumber;
+             if(!found) arr.push(randomnumber);
       }
+
       var imgWidth = $(window).width() / 5.5;
-      var imgHeight = $(window).height() / 5.5;
+      var imgHeight = imgWidth * 5 / 8;
+
+      if(imgHeight * 5 > $(window).height()){
+        imgHeight = $(window).height() / 5.5;
+        imgWidth = imgHeight * 8 / 5;        
+      }
+      var arrCounter = 0;
       for(var i = 0;i < 5; i++){
+        
         $('#theTable').append('<tr id="row' + i + '""></tr>');
         for (var j = 0;j < 5; j++){
-          $('#row' + i).append('<td><img src="https://unsplash.it/' + imgWidth + '/' + imgHeight + '?image=' + arr[((i*5) + j)] + '"></td>');
+          $('#row' + i).append('<td><img src="assets/pix' + arr[arrCounter++] + '.png" style="width: ' + imgWidth + 'px; height: ' + imgHeight +'px;"></td>');
         }
       }
       var teams = [];
@@ -180,7 +184,7 @@
           }  
         }); 
       }
-    });
+    })();
 
     function shuffle(array) {
       var currentIndex = array.length, temporaryValue, randomIndex;
